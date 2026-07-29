@@ -58,10 +58,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }
 
   async function signIn(username: string, password: string) {
-    const { data: prof } = await supabase.from('profiles').select('id,email').eq('username', username).maybeSingle();
-    if (!prof || !(prof as any).email) return { error: 'Usuário não encontrado' };
-    const { error } = await supabase.auth.signInWithPassword({ email: (prof as any).email, password });
-    if (error) return { error: error.message };
+    const email = `${username.trim().toLowerCase()}@picapau.local`;
+    const { error } = await supabase.auth.signInWithPassword({ email, password });
+    if (error) return { error: 'Usuário ou senha inválidos' };
     return {};
   }
 
