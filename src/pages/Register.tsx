@@ -15,7 +15,7 @@ export default function Register() {
     if (form.password !== form.confirm) return setError('As senhas não coincidem');
     if (form.password.length < 6) return setError('Senha deve ter ao menos 6 caracteres');
     setLoading(true);
-    const email = `${form.username}@picapau.local`;
+    const email = `${form.username.trim().toLowerCase()}@picapau.local`;
     const { error } = await signUp({ email, password: form.password, fullName: form.fullName, whatsapp: form.whatsapp, username: form.username });
     setLoading(false);
     if (error) setError(error); else nav('/login');
